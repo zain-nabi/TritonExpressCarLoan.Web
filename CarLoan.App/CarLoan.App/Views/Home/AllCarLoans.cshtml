@@ -1,0 +1,177 @@
+﻿@model CarLoan.App.Models.QuoteViewModel
+@{
+    ViewData["Title"] = "Search Quotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="content" role="main" class="main">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-sm mb-2 mb-sm-0">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-no-gutter">
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Quotation</a></li>
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Overview</a></li>
+                        </ol>
+                    </nav>
+
+                    <h1 class="page-header-title">Quotations</h1>
+                </div>
+            </div>
+            <!-- End Row -->
+        </div>
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header">
+                <div class="row justify-content-between align-items-center flex-grow-1">
+                    <div class="col-lg-6 mb-3 mb-lg-0">
+                        <form>
+                            <!-- Search -->
+                            <div class="input-group input-group-merge input-group-flush">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="tio-search"></i>
+                                    </div>
+                                </div>
+                                <input id="datatableSearch" type="search" class="form-control" placeholder="Search orders" aria-label="Search orders">
+                            </div>
+                            <!-- End Search -->
+                        </form>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- End Header -->
+            <!-- Table -->
+            <div class="table-responsive datatable-custom">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <table id="datatable" class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer" style="width: 100%;" data-hs-datatables-options='{
+             "order": [],
+             "columnDefs": [ {
+                   "targets": 6,
+                   "orderable": false
+              } ],
+             "info": {
+               "totalQty": "#datatableEntriesInfoTotalQty"
+             },
+             "search": "#datatableSearch",
+             "entries": "#datatableEntries",
+             "isResponsive": false,
+             "isShowPaging": false,
+             "pagination": "datatableEntriesPagination"
+                   }'>
+                        <thead class="thead-light">
+                            <tr role="row">
+                                <th>Name</th>
+                                <th>Created On</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if(Model.QuoteList == null)
+                            {
+                                <tr class="">
+                                    <td>
+                                        No Data Available
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.QuoteList)
+                                {
+
+                                    <tr class="">
+                                        <td class="align-middle">
+                                            <a class="d-flex align-items-center">
+                                                <div class="avatar avatar-soft-primary avatar-circle">
+                                                    <span class="avatar-initials">@item.name.Substring(0, 1)</span>
+                                                </div>
+                                                <div class="ml-3">
+                                                    <span class="d-block h5 text-hover-primary mb-0">@item.name</span>
+                                                    <span class="d-block h5 text-hover-primary mb-0">@item.surname</span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="media align-items-center">
+                                                <span>@item.createdOn.ToString("dd MMMM yyyy")</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @item.email
+                                        </td>
+                                        <td>
+                                            @item.phone
+                                        </td>
+                                        <td>
+                                            @item.address
+                                        </td>
+                                        <td>
+                                            @item.amount
+                                        </td>
+                                        <td class="align-middle">
+                                            <a class="btn btn-sm btn-white" href="@Url.Action("Edit", new { item.quoteID} )">
+                                                <i class="tio-receipt-outlined mr-1"></i> Edit
+                                            </a>
+                                            <a class="btn btn-sm btn-white" href="@Url.Action("Delete", new { item.quoteID })">
+                                                <i class="fal fa-trash mr-1"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End Table -->
+            <!-- Footer -->
+            <div class="card-footer">
+                <!-- Pagination -->
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                    <div class="col-sm mb-2 mb-sm-0">
+                        <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                            <span class="mr-2">Showing:</span>
+
+                            <!-- Select -->
+                            <select id="datatableEntries" class="js-select2-custom"
+                                    data-hs-select2-options='{
+                    "minimumResultsForSearch": "Infinity",
+                    "customClass": "custom-select custom-select-sm custom-select-borderless",
+                    "dropdownAutoWidth": true,
+                    "width": true
+                  }'>
+                                <option value="3">3</option>
+                                <option value="6" selected>6</option>
+                                <option value="9">9</option>
+                            </select>
+                            <!-- End Select -->
+
+                            <span class="text-secondary mr-2">of</span>
+
+                            <!-- Pagination Quantity -->
+                            <span id="datatableEntriesInfoTotalQty"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-auto">
+                        <div class="d-flex justify-content-center justify-content-sm-end">
+                            <!-- Pagination -->
+                            <nav id="datatableEntriesPagination" aria-label="Activity pagination"></nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Pagination -->
+            </div>
+            <!-- End Footer -->
+        </div>
+    </div>
+</main>

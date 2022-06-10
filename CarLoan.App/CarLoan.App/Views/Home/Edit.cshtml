@@ -1,0 +1,106 @@
+﻿@model CarLoan.App.Models.QuoteViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- ========== MAIN ========== -->
+<main id="content" role="main" class="main">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-sm mb-2 mb-sm-0">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-no-gutter">
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Quotation</a></li>
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Overview</a></li>
+                        </ol>
+                    </nav>
+
+                    <h1 class="page-header-title">Edit Quotation</h1>
+                </div>
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Breadcrumb Section -->
+        <!-- Content Section -->
+        <div class="w-100 pt-10 pt-lg-7 pb-7" style="max-width: 25rem;">
+            <!-- Form -->
+            <form class="js-validate" id="form" method="post" asp-action="Edit" asp-controller="Home">
+
+                <!-- Form Group -->
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Name</label>
+                    @Html.TextBoxFor(model => model.Quote.name,new{ @class="form-control form-control-lg", @name="name" ,@id="signupSrEmail" ,@placeholder="Clareon", @required="required" })
+                </div>
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Surname</label>
+                    @Html.TextBoxFor(model => model.Quote.surname,new{ @class="form-control form-control-lg", @name="surname" ,@id="signupSrEmail" ,@placeholder="Williams", @required="required" })
+                </div>
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Email</label>
+                    @Html.TextBoxFor(model => model.Quote.email,new{ @class="form-control form-control-lg", @name="email" ,@id="signupSrEmail" ,@placeholder="sands@gmail.com", @required="required" })
+
+                </div>
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Phone</label>
+
+                    @Html.TextBoxFor(model => model.Quote.phone,new{ @class="form-control form-control-lg", @name="phone" ,@id="signupSrEmail" ,@placeholder="0315076898", @required="required" })
+                </div>
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Address</label>
+                    @Html.TextBoxFor(model => model.Quote.address,new{ @class="form-control form-control-lg", @name="address" ,@id="signupSrEmail" ,@placeholder="20 Long beach, California", @required="required" })
+                </div>
+                <div class="js-form-message form-group">
+                    <label class="input-label" for="signupSrEmail">Amount</label>
+                    @Html.TextBoxFor(model => model.Quote.amount,new{ @id="txtChar", @class="form-control form-control-lg", @onkeypress="return isNumberKey(event,this.id)",@name="txtChar", @required="required"})
+                    @Html.HiddenFor(model => model.Quote.quoteID)
+                    @Html.HiddenFor(model => model.Quote.createdOn)
+                </div>
+                <button type="submit" class="btn btn-lg btn-block btn-primary">Submit</button>
+            </form>
+            <!-- End Form -->
+            <div class="js-form-message mt-5" style="color:#ed4c78;font-size:80%;">
+                @Html.ValidationSummary()
+            </div>
+        </div>
+        <!-- End Content Section -->
+    </div>
+</main>
+<!-- ========== END MAIN ========== -->
+@section scripts {
+<script>
+    function checkKey() {
+        var clean = this.value.replace(/[^0-9,]/g, "")
+                               .replace(/(,.*?),(.*,)?/, "$1");
+        // don't move cursor to end if no change
+        if (clean !== this.value) this.value = clean;
+    }
+
+    // demo
+    document.getElementById('txtChar').oninput = checkKey;
+</script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
